@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empdle 👑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .game-info {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .guess-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .guess-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .guess-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .guess-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .guesses-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .guess-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .guess-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .guess-cell {
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .country-name {
+            text-align: left;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .correct {
+            background: #4ade80;
+            color: white;
+        }
+
+        .partial {
+            background: #fbbf24;
+            color: white;
+        }
+
+        .wrong {
+            background: #f87171;
+            color: white;
+        }
+
+        .game-over {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .game-over h2 {
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+
+        .win {
+            color: #22c55e;
+        }
+
+        .lose {
+            color: #ef4444;
+        }
+
+        .new-game-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+
+        .new-game-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .historical-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .guess-header, .guess-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .guess-cell {
+                padding: 5px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Empdle 👑</h1>
+            <div class="subtitle">Guess the historical empire, kingdom, or nation!</div>
+        </div>
+
+        <div class="game-info">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="attempts">7</div>
+                    <div>Attempts Left</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="streak">0</div>
+                    <div>Streak</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="guess-section">
+            <div class="search-container">
+                <input type="text" id="countryInput" class="search-input" 
+                       placeholder="Type a historical country name..." autocomplete="off">
+                <div id="suggestions" class="suggestions"></div>
+            </div>
+            <button id="guessBtn" class="guess-btn">Make Guess</button>
+        </div>
+
+        <div class="guesses-container">
+            <div class="guess-header">
+                <div>Country/Empire</div>
+                <div>Continent</div>
+                <div>Time Period</div>
+                <div>Government</div>
+                <div>Religion</div>
+                <div>Size</div>
+                <div>Duration</div>
+            </div>
+            <div id="guessesContainer"></div>
+        </div>
+
+        <div id="gameOver" class="game-over" style="display: none;">
+            <h2 id="gameOverTitle"></h2>
+            <div id="answerInfo"></div>
+            <div class="historical-info" id="historicalInfo"></div>
+            <button id="newGameBtn" class="new-game-btn">New Game</button>
+        </div>
+    </div>
+
+    <script>
+        const historicalCountries = [
+            {
+                name: "Byzantine Empire",
+                continent: "Europe/Asia",
+                period: "330-1453 CE",
+                government: "Empire",
+                religion: "Christianity",
+                size: "Large",
+                duration: "1123 years",
+                info: "The Byzantine Empire was the continuation of the Roman Empire in the East, with Constantinople as its capital. It preserved Roman law and Greek culture for over a millennium."
+            },
+            {
+                name: "Mongol Empire",
+                continent: "Asia",
+                period: "1206-1368 CE",
+                government: "Empire",
+                religion: "Shamanism/Buddhism",
+                size: "Massive",
+                duration: "162 years",
+                info: "The largest contiguous land empire in history, stretching from Eastern Europe to the Pacific Ocean under the leadership of Genghis Khan and his successors."
+            },
+            {
+                name: "Ottoman Empire",
+                continent: "Europe/Asia/Africa",
+                period: "1299-1922 CE",
+                government: "Empire",
+                religion: "Islam",
+                size: "Large",
+                duration: "623 years",
+                info: "A powerful Islamic empire that controlled much of Southeast Europe, Western Asia, and North Africa for over six centuries, with its capital in Constantinople."
+            },
+            {
+                name: "Aztec Empire",
+                continent: "North America",
+                period: "1428-1521 CE",
+                government: "Empire",
+                religion: "Polytheism",
+                size: "Medium",
+                duration: "93 years",
+                info: "A Mesoamerican empire centered in Tenochtitlan, known for its advanced architecture, agriculture, and complex religious practices before Spanish conquest."
+            },
+            {
+                name: "Inca Empire",
+                continent: "South America",
+                period: "1438-1533 CE",
+                government: "Empire",
+                religion: "Polytheism",
+                size: "Large",
+                duration: "95 years",
+                info: "The largest empire in pre-Columbian America, stretching along the Andes mountains with remarkable engineering achievements including Machu Picchu."
+            },
+            {
+                name: "Holy Roman Empire",
+                continent: "Europe",
+                period: "962-1806 CE",
+                government: "Empire",
+                religion: "Christianity",
+                size: "Large",
+                duration: "844 years",
+                info: "A multi-ethnic complex of territories in Western and Central Europe, considered the first Reich of German history."
+            },
+            {
+                name: "Mughal Empire",
+                continent: "Asia",
+                period: "1526-1857 CE",
+                government: "Empire",
+                religion: "Islam",
+                size: "Large",
+                duration: "331 years",
+                info: "A powerful Islamic empire that controlled most of the Indian subcontinent, known for architectural marvels like the Taj Mahal."
+            },
+            {
+                name: "British Raj",
+                continent: "Asia",
+                period: "1858-1947 CE",
+                government: "Colonial",
+                religion: "Christianity/Hinduism",
+                size: "Large",
+                duration: "89 years",
+                info: "The rule of the British Crown over the Indian subcontinent, one of the largest colonial territories in history."
+            },
+            {
+                name: "Soviet Union",
+                continent: "Europe/Asia",
+                period: "1922-1991 CE",
+                government: "Socialist",
+                religion: "Atheist",
+                size: "Massive",
+                duration: "69 years",
+                info: "The Union of Soviet Socialist Republics was the world's largest country and a major superpower during the Cold War era."
+            },
+            {
+                name: "Yugoslavia",
+                continent: "Europe",
+                period: "1918-1992 CE",
+                government: "Kingdom/Socialist",
+                religion: "Christianity/Islam",
+                size: "Medium",
+                duration: "74 years",
+                info: "A South Slavic state that existed in various forms throughout the 20th century before dissolving into several independent nations."
+            },
+            {
+                name: "Carthaginian Empire",
+                continent: "Africa",
+                period: "814-146 BCE",
+                government: "Republic",
+                religion: "Polytheism",
+                size: "Medium",
+                duration: "668 years",
+                info: "A powerful ancient civilization centered in North Africa, famous for its naval prowess and conflicts with Rome, especially under Hannibal."
+            },
+            {
+                name: "Sassanid Empire",
+                continent: "Asia",
+                period: "224-651 CE",
+                government: "Empire",
+                religion: "Zoroastrianism",
+                size: "Large",
+                duration: "427 years",
+                info: "The last Iranian empire before the Muslim conquest, known for its advanced culture and as a major rival to the Byzantine Empire."
+            },
+            {
+                name: "Austro-Hungarian Empire",
+                continent: "Europe",
+                period: "1867-1918 CE",
+                government: "Dual Monarchy",
+                religion: "Christianity",
+                size: "Large",
+                duration: "51 years",
+                info: "A constitutional monarchic union between Austria and Hungary, one of Europe's great powers until its dissolution after World War I."
+            },
+            {
+                name: "Mali Empire",
+                continent: "Africa",
+                period: "1235-1600 CE",
+                government: "Empire",
+                religion: "Islam",
+                size: "Large",
+                duration: "365 years",
+                info: "A wealthy West African empire known for its gold trade and the famous pilgrimage of Mansa Musa, one of the richest people in history."
+            },
+            {
+                name: "Khmer Empire",
+                continent: "Asia",
+                period: "802-1431 CE",
+                government: "Empire",
+                religion: "Hinduism/Buddhism",
+                size: "Medium",
+                duration: "629 years",
+                info: "A powerful Southeast Asian empire centered in Cambodia, famous for building the magnificent Angkor Wat temple complex."
+            }
+        ];
+
+        let currentCountry = null;
+        let guesses = [];
+        let gameWon = false;
+        let attempts = 7;
+        let             streak = parseInt(localStorage.getItem('empdle_streak') || '0');
+
+        function initGame() {
+            currentCountry = historicalCountries[Math.floor(Math.random() * historicalCountries.length)];
+            guesses = [];
+            gameWon = false;
+            attempts = 7;
+            
+            document.getElementById('attempts').textContent = attempts;
+            document.getElementById('streak').textContent = streak;
+            document.getElementById('guessesContainer').innerHTML = '';
+            document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('countryInput').value = '';
+            document.getElementById('countryInput').disabled = false;
+            document.getElementById('guessBtn').disabled = false;
+            
+            console.log('Current country:', currentCountry.name); // For debugging
+        }
+
+        function showSuggestions(input) {
+            const suggestions = document.getElementById('suggestions');
+            const value = input.toLowerCase();
+            
+            if (value.length < 2) {
+                suggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = historicalCountries.filter(country => 
+                country.name.toLowerCase().includes(value) && 
+                !guesses.find(guess => guess.name === country.name)
+            );
+
+            if (matches.length === 0) {
+                suggestions.style.display = 'none';
+                return;
+            }
+
+            suggestions.innerHTML = matches.slice(0, 8).map(country => 
+                `<div class="suggestion-item" data-name="${country.name}">${country.name}</div>`
+            ).join('');
+            
+            suggestions.style.display = 'block';
+        }
+
+        function makeGuess(countryName) {
+            const country = historicalCountries.find(c => c.name === countryName);
+            if (!country || guesses.find(g => g.name === countryName)) return;
+
+            guesses.push(country);
+            attempts--;
+            
+            document.getElementById('attempts').textContent = attempts;
+            
+            const guessRow = createGuessRow(country);
+            document.getElementById('guessesContainer').appendChild(guessRow);
+            
+            if (country.name === currentCountry.name) {
+                gameWon = true;
+                streak++;
+                localStorage.setItem('empdle_streak', streak.toString());
+                endGame();
+            } else if (attempts === 0) {
+                streak = 0;
+                localStorage.setItem('empdle_streak', '0');
+                endGame();
+            }
+            
+            document.getElementById('countryInput').value = '';
+            document.getElementById('suggestions').style.display = 'none';
+        }
+
+        function createGuessRow(guess) {
+            const row = document.createElement('div');
+            row.className = 'guess-row';
+            
+            const continent = getColorClass(guess.continent, currentCountry.continent);
+            const period = getColorClass(guess.period, currentCountry.period);
+            const government = getColorClass(guess.government, currentCountry.government);
+            const religion = getColorClass(guess.religion, currentCountry.religion);
+            const size = getColorClass(guess.size, currentCountry.size);
+            const duration = getColorClass(guess.duration, currentCountry.duration);
+            
+            row.innerHTML = `
+                <div class="guess-cell country-name ${guess.name === currentCountry.name ? 'correct' : 'wrong'}">${guess.name}</div>
+                <div class="guess-cell ${continent}">${guess.continent}</div>
+                <div class="guess-cell ${period}">${guess.period}</div>
+                <div class="guess-cell ${government}">${guess.government}</div>
+                <div class="guess-cell ${religion}">${guess.religion}</div>
+                <div class="guess-cell ${size}">${guess.size}</div>
+                <div class="guess-cell ${duration}">${guess.duration}</div>
+            `;
+            
+            return row;
+        }
+
+        function getColorClass(guess, correct) {
+            if (guess === correct) return 'correct';
+            
+            // Special logic for partial matches
+            if (guess.includes('/') && correct.includes('/')) {
+                const guessOptions = guess.split('/');
+                const correctOptions = correct.split('/');
+                const hasOverlap = guessOptions.some(g => correctOptions.includes(g));
+                if (hasOverlap) return 'partial';
+            }
+            
+            return 'wrong';
+        }
+
+        function endGame() {
+            document.getElementById('countryInput').disabled = true;
+            document.getElementById('guessBtn').disabled = true;
+            
+            const gameOverDiv = document.getElementById('gameOver');
+            const titleEl = document.getElementById('gameOverTitle');
+            const answerEl = document.getElementById('answerInfo');
+            const infoEl = document.getElementById('historicalInfo');
+            
+            if (gameWon) {
+                titleEl.textContent = '🎉 Congratulations!';
+                titleEl.className = 'win';
+                answerEl.innerHTML = `You guessed <strong>${currentCountry.name}</strong> in ${8 - attempts} attempts!`;
+            } else {
+                titleEl.textContent = '😔 Game Over';
+                titleEl.className = 'lose';
+                answerEl.innerHTML = `The answer was <strong>${currentCountry.name}</strong>`;
+            }
+            
+            infoEl.innerHTML = `
+                <h3>${currentCountry.name}</h3>
+                <p><strong>Period:</strong> ${currentCountry.period}</p>
+                <p><strong>Government:</strong> ${currentCountry.government}</p>
+                <p><strong>Religion:</strong> ${currentCountry.religion}</p>
+                <p><strong>Size:</strong> ${currentCountry.size}</p>
+                <p><strong>Duration:</strong> ${currentCountry.duration}</p>
+                <p style="margin-top: 10px;">${currentCountry.info}</p>
+            `;
+            
+            document.getElementById('streak').textContent = streak;
+            gameOverDiv.style.display = 'block';
+        }
+
+        // Event listeners
+        document.getElementById('countryInput').addEventListener('input', function() {
+            showSuggestions(this.value);
+        });
+
+        document.getElementById('countryInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const value = this.value.trim();
+                const country = historicalCountries.find(c => 
+                    c.name.toLowerCase() === value.toLowerCase()
+                );
+                if (country) {
+                    makeGuess(country.name);
+                }
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('suggestion-item')) {
+                makeGuess(e.target.dataset.name);
+            } else if (!e.target.closest('.search-container')) {
+                document.getElementById('suggestions').style.display = 'none';
+            }
+        });
+
+        document.getElementById('guessBtn').addEventListener('click', function() {
+            const value = document.getElementById('countryInput').value.trim();
+            const country = historicalCountries.find(c => 
+                c.name.toLowerCase() === value.toLowerCase()
+            );
+            if (country) {
+                makeGuess(country.name);
+            }
+        });
+
+        document.getElementById('newGameBtn').addEventListener('click', initGame);
+
+        // Initialize game
+        initGame();
+    </script>
+</body>
+</html>
