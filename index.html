@@ -335,6 +335,7 @@
 
     <script>
         const historicalCountries = [
+            // Original 15 countries
             {
                 name: "Byzantine Empire",
                 continent: "Europe/Asia",
@@ -484,6 +485,343 @@
                 size: "Medium",
                 duration: "629 years",
                 info: "A powerful Southeast Asian empire centered in Cambodia, famous for building the magnificent Angkor Wat temple complex."
+            },
+            // New additions - Ancient Civilizations
+            {
+                name: "Roman Empire",
+                continent: "Europe/Africa/Asia",
+                period: "27 BCE-476 CE",
+                government: "Empire",
+                religion: "Polytheism/Christianity",
+                size: "Massive",
+                duration: "503 years",
+                info: "One of history's greatest empires, controlling most of the Mediterranean world at its peak. Known for law, engineering, and military prowess."
+            },
+            {
+                name: "Persian Empire",
+                continent: "Asia/Africa",
+                period: "550-330 BCE",
+                government: "Empire",
+                religion: "Zoroastrianism",
+                size: "Massive",
+                duration: "220 years",
+                info: "The Achaemenid Persian Empire was the largest empire in ancient history, stretching from India to Greece under Cyrus the Great and Darius."
+            },
+            {
+                name: "Ancient Egypt",
+                continent: "Africa",
+                period: "3100-30 BCE",
+                government: "Kingdom",
+                religion: "Polytheism",
+                size: "Medium",
+                duration: "3070 years",
+                info: "One of the longest-lasting civilizations in history, famous for pyramids, pharaohs, and advances in medicine, mathematics, and engineering."
+            },
+            {
+                name: "Macedonian Empire",
+                continent: "Europe/Asia/Africa",
+                period: "336-323 BCE",
+                government: "Empire",
+                religion: "Polytheism",
+                size: "Massive",
+                duration: "13 years",
+                info: "Alexander the Great's short-lived but influential empire that spread Greek culture from Egypt to India, creating the Hellenistic world."
+            },
+            {
+                name: "Han Dynasty",
+                continent: "Asia",
+                period: "206 BCE-220 CE",
+                government: "Dynasty",
+                religion: "Confucianism",
+                size: "Large",
+                duration: "426 years",
+                info: "A golden age of Chinese civilization that established the Silk Road, invented paper, and created a unified Chinese identity."
+            },
+            // Medieval & Renaissance
+            {
+                name: "Umayyad Caliphate",
+                continent: "Asia/Africa/Europe",
+                period: "661-750 CE",
+                government: "Caliphate",
+                religion: "Islam",
+                size: "Massive",
+                duration: "89 years",
+                info: "The second Islamic caliphate, at its peak stretching from Spain to Central Asia, known for rapid expansion and cultural achievements."
+            },
+            {
+                name: "Abbasid Caliphate",
+                continent: "Asia/Africa",
+                period: "750-1258 CE",
+                government: "Caliphate",
+                religion: "Islam",
+                size: "Large",
+                duration: "508 years",
+                info: "Islamic golden age caliphate centered in Baghdad, known for advances in science, mathematics, medicine, and philosophy."
+            },
+            {
+                name: "Carolingian Empire",
+                continent: "Europe",
+                period: "800-888 CE",
+                government: "Empire",
+                religion: "Christianity",
+                size: "Large",
+                duration: "88 years",
+                info: "Charlemagne's empire that revived the concept of Western European unity and sparked the Carolingian Renaissance."
+            },
+            {
+                name: "Fatimid Caliphate",
+                continent: "Africa/Asia",
+                period: "909-1171 CE",
+                government: "Caliphate",
+                religion: "Islam",
+                size: "Large",
+                duration: "262 years",
+                info: "Shia Islamic caliphate that controlled North Africa and parts of the Middle East, founded the city of Cairo."
+            },
+            {
+                name: "Golden Horde",
+                continent: "Europe/Asia",
+                period: "1242-1502 CE",
+                government: "Khanate",
+                religion: "Shamanism/Islam",
+                size: "Large",
+                duration: "260 years",
+                info: "Mongol khanate that controlled the Rus' principalities and much of Eastern Europe, influencing Russian development for centuries."
+            },
+            // Asian Empires
+            {
+                name: "Tang Dynasty",
+                continent: "Asia",
+                period: "618-907 CE",
+                government: "Dynasty",
+                religion: "Buddhism/Confucianism",
+                size: "Large",
+                duration: "289 years",
+                info: "Often considered the golden age of Chinese civilization, known for poetry, art, and cultural exchange along the Silk Road."
+            },
+            {
+                name: "Qing Dynasty",
+                continent: "Asia",
+                period: "1644-1912 CE",
+                government: "Dynasty",
+                religion: "Confucianism/Buddhism",
+                size: "Massive",
+                duration: "268 years",
+                info: "The last imperial dynasty of China, founded by the Manchus, which expanded China to its largest historical size."
+            },
+            {
+                name: "Tokugawa Shogunate",
+                continent: "Asia",
+                period: "1603-1868 CE",
+                government: "Shogunate",
+                religion: "Buddhism/Shintoism",
+                size: "Small",
+                duration: "265 years",
+                info: "Japan's final shogunate period, known for isolationist sakoku policy, peace, and cultural development including kabuki and haiku."
+            },
+            {
+                name: "Vijayanagara Empire",
+                continent: "Asia",
+                period: "1336-1646 CE",
+                government: "Empire",
+                religion: "Hinduism",
+                size: "Medium",
+                duration: "310 years",
+                info: "The last great Hindu empire of South India, known for its wealth, architectural achievements, and resistance to Islamic expansion."
+            },
+            {
+                name: "Safavid Empire",
+                continent: "Asia",
+                period: "1501-1736 CE",
+                government: "Empire",
+                religion: "Islam",
+                size: "Large",
+                duration: "235 years",
+                info: "Persian empire that established Shia Islam as the state religion and created a distinct Persian identity, known for art and architecture."
+            },
+            // African Kingdoms
+            {
+                name: "Kingdom of Kush",
+                continent: "Africa",
+                period: "1070 BCE-350 CE",
+                government: "Kingdom",
+                religion: "Polytheism",
+                size: "Medium",
+                duration: "1420 years",
+                info: "Ancient African kingdom south of Egypt, known for its iron working, pyramids, and rule over Egypt as the 'Black Pharaohs.'"
+            },
+            {
+                name: "Ethiopian Empire",
+                continent: "Africa",
+                period: "1270-1974 CE",
+                government: "Empire",
+                religion: "Christianity",
+                size: "Medium",
+                duration: "704 years",
+                info: "One of the few African nations to resist European colonization, tracing its roots to the Queen of Sheba and King Solomon."
+            },
+            {
+                name: "Songhai Empire",
+                continent: "Africa",
+                period: "1464-1591 CE",
+                government: "Empire",
+                religion: "Islam",
+                size: "Large",
+                duration: "127 years",
+                info: "The largest empire in African history, controlling the trans-Saharan trade routes and centers of learning like Timbuktu."
+            },
+            {
+                name: "Kingdom of Aksum",
+                continent: "Africa",
+                period: "100-960 CE",
+                government: "Kingdom",
+                religion: "Christianity",
+                size: "Medium",
+                duration: "860 years",
+                info: "Ancient Ethiopian kingdom and major trading power, one of the first Christian nations and issuer of its own currency."
+            },
+            // American Civilizations
+            {
+                name: "Maya Civilization",
+                continent: "North America",
+                period: "2000 BCE-1500 CE",
+                government: "City-States",
+                religion: "Polytheism",
+                size: "Medium",
+                duration: "3500 years",
+                info: "Advanced Mesoamerican civilization known for astronomy, mathematics, hieroglyphic writing, and monumental architecture."
+            },
+            {
+                name: "Tiwanaku Empire",
+                continent: "South America",
+                period: "300-1000 CE",
+                government: "Empire",
+                religion: "Polytheism",
+                size: "Medium",
+                duration: "700 years",
+                info: "Pre-Columbian empire centered around Lake Titicaca, known for advanced agriculture and monumental stone architecture."
+            },
+            {
+                name: "Wari Empire",
+                continent: "South America",
+                period: "600-1000 CE",
+                government: "Empire",
+                religion: "Polytheism",
+                size: "Medium",
+                duration: "400 years",
+                info: "Ancient Peruvian empire that preceded the Incas, known for its road system and administrative innovations."
+            },
+            // European Kingdoms
+            {
+                name: "Kingdom of Poland-Lithuania",
+                continent: "Europe",
+                period: "1569-1795 CE",
+                government: "Republic",
+                religion: "Christianity",
+                size: "Large",
+                duration: "226 years",
+                info: "The largest state in Europe at its peak, known for religious tolerance and unique noble democracy system."
+            },
+            {
+                name: "Venetian Republic",
+                continent: "Europe",
+                period: "697-1797 CE",
+                government: "Republic",
+                religion: "Christianity",
+                size: "Small",
+                duration: "1100 years",
+                info: "Maritime republic that dominated Mediterranean trade for over a millennium, known as 'La Serenissima' for its stability."
+            },
+            {
+                name: "Kingdom of Burgundy",
+                continent: "Europe",
+                period: "411-1795 CE",
+                government: "Kingdom",
+                religion: "Christianity",
+                size: "Medium",
+                duration: "1384 years",
+                info: "Medieval kingdom that became a major European power, known for its wealth, art, and influence on Renaissance culture."
+            },
+            {
+                name: "Kievan Rus",
+                continent: "Europe",
+                period: "882-1283 CE",
+                government: "Kingdom",
+                religion: "Christianity",
+                size: "Large",
+                duration: "401 years",
+                info: "Early East Slavic state that laid the foundation for Russia, Ukraine, and Belarus, known for converting to Orthodox Christianity."
+            },
+            // Modern Era
+            {
+                name: "Spanish Empire",
+                continent: "Europe/Americas/Africa/Asia",
+                period: "1492-1898 CE",
+                government: "Empire",
+                religion: "Christianity",
+                size: "Massive",
+                duration: "406 years",
+                info: "The first global empire, controlling vast territories in the Americas, Philippines, and parts of Africa and Europe."
+            },
+            {
+                name: "French Colonial Empire",
+                continent: "Africa/Asia/Americas",
+                period: "1534-1980 CE",
+                government: "Colonial",
+                religion: "Christianity",
+                size: "Massive",
+                duration: "446 years",
+                info: "At its peak, the second-largest colonial empire in history, spanning territories across six continents."
+            },
+            {
+                name: "British Empire",
+                continent: "Global",
+                period: "1583-1997 CE",
+                government: "Colonial",
+                religion: "Christianity",
+                size: "Massive",
+                duration: "414 years",
+                info: "The largest empire in history at its peak, covering a quarter of Earth's land surface and population."
+            },
+            {
+                name: "German Empire",
+                continent: "Europe/Africa",
+                period: "1871-1918 CE",
+                government: "Empire",
+                religion: "Christianity",
+                size: "Large",
+                duration: "47 years",
+                info: "The Second Reich, a major European power that played a central role in World War I before its dissolution."
+            },
+            {
+                name: "Russian Empire",
+                continent: "Europe/Asia",
+                period: "1721-1917 CE",
+                government: "Empire",
+                religion: "Christianity",
+                size: "Massive",
+                duration: "196 years",
+                info: "One of the largest empires in history, stretching from Poland to the Pacific, ended by the Russian Revolution."
+            },
+            {
+                name: "Czechoslovakia",
+                continent: "Europe",
+                period: "1918-1993 CE",
+                government: "Republic/Socialist",
+                religion: "Christianity",
+                size: "Small",
+                duration: "75 years",
+                info: "Central European state that emerged after WWI, survived WWII and communist rule, peacefully split into Czech Republic and Slovakia."
+            },
+            {
+                name: "East Germany",
+                continent: "Europe",
+                period: "1949-1990 CE",
+                government: "Socialist",
+                religion: "Christianity/Atheist",
+                size: "Small",
+                duration: "41 years",
+                info: "The German Democratic Republic, a socialist state during the Cold War, ended with German reunification in 1990."
             }
         ];
 
